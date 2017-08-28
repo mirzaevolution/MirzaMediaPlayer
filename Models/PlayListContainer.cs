@@ -8,6 +8,7 @@ namespace MirzaMediaPlayer.Models
         private ObservableCollection<PlayList> _playListData = new ObservableCollection<PlayList>();
         public PlayListContainer()
         {
+            //For UI testing purpose: 
             //_playListData = new ObservableCollection<PlayList>();
             //_playListData.Add(new PlayList("Icons/Music.ico", "test.mp3", "C:\\Musics\\test.mp3"));
             //_playListData.Add(new PlayList("Icons/Video.ico", "test.mp4", "C:\\Musics\\test.mp4"));

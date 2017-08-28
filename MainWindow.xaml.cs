@@ -7,12 +7,11 @@ using System.Windows.Threading;
 using System.Threading.Tasks;
 using MirzaMediaPlayer.Models;
 using System.Windows.Media.Imaging;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace MirzaMediaPlayer
 {
-  
+
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -21,8 +20,7 @@ namespace MirzaMediaPlayer
 
             _playListContainer = TryFindResource("playListContainer") as PlayListContainer;
         }
-
-
+        
         #region private properties
         private TimeSpan _totalTimer, _progressTimer;
         private DispatcherTimer _timer;
@@ -156,10 +154,18 @@ namespace MirzaMediaPlayer
             fileName = _playListContainer.PlayListData[_currentSelectedIndex].FullName;
             return fileName;
         }
+        private string GetPrevMediaFileName()
+        {
+            string fileName = "";
+            if (_currentSelectedIndex - 1 >= 0)
+                _currentSelectedIndex--;
+            else
+                _currentSelectedIndex = _playListContainer.PlayListData.Count - 1;
+            fileName = _playListContainer.PlayListData[_currentSelectedIndex].FullName;
+            return fileName;
+        }
         #endregion
-
-       
-        
+     
         #region main events
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -212,8 +218,8 @@ namespace MirzaMediaPlayer
                     image = new BitmapImage(_pauseUri);
                     imagePlayPause.Source = image;
                 }
-                catch { buttonPlayPause.Content = "Pause"; }
-                buttonPlayPause.ToolTip = "Pause";
+                catch { buttonPlayPause.Content = "Pause (CTRL+P)"; }
+                buttonPlayPause.ToolTip = "Pause (CTRL+P)";
             }
         }
 
@@ -229,8 +235,6 @@ namespace MirzaMediaPlayer
             }
         }
         #endregion
-
-
 
         #region Commands
         private void cmdLoad_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -290,7 +294,7 @@ namespace MirzaMediaPlayer
         private void cmdPlayPause_Executed(object sender, ExecutedRoutedEventArgs e)
         {
              BitmapImage image = null;
-            if (buttonPlayPause.ToolTip.ToString() == "Play")
+            if (buttonPlayPause.ToolTip.ToString() == "Play (CTRL+P)")
             {
                 if (_isPaused)
                     PlayMedia("");
@@ -304,10 +308,10 @@ namespace MirzaMediaPlayer
                     image = new BitmapImage(_pauseUri);
                     imagePlayPause.Source = image;
                 }
-                catch { buttonPlayPause.Content = "Pause"; }
-                buttonPlayPause.ToolTip = "Pause";
+                catch { buttonPlayPause.Content = "Pause (CTRL+P)"; }
+                buttonPlayPause.ToolTip = "Pause (CTRL+P)";
             }
-            else if (buttonPlayPause.ToolTip.ToString() == "Pause")
+            else if (buttonPlayPause.ToolTip.ToString() == "Pause (CTRL+P)")
             {
                 _isPaused = true;
                 PauseMedia();
@@ -317,9 +321,47 @@ namespace MirzaMediaPlayer
                     image = new BitmapImage(_playUri);
                     imagePlayPause.Source = image;
                 }
-                catch { buttonPlayPause.Content = "Play"; }
-                buttonPlayPause.ToolTip = "Play";
+                catch { buttonPlayPause.Content = "Play (CTRL+P)"; }
+                buttonPlayPause.ToolTip = "Play (CTRL+P)";
             }
+        }
+
+        private void cmdPrevious_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = _playListContainer == null ? false : _playListContainer.PlayListData.Count > 0;
+        }
+
+        private void cmdPrevious_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            BitmapImage image = null;
+            PlayMedia(GetPrevMediaFileName());
+            _isPaused = false;
+            try
+            {
+                image = new BitmapImage(_pauseUri);
+                imagePlayPause.Source = image;
+            }
+            catch { buttonPlayPause.Content = "Pause (CTRL+P)"; }
+            buttonPlayPause.ToolTip = "Pause (CTRL+P)";
+        }
+
+        private void cmdNext_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = _playListContainer == null ? false : _playListContainer.PlayListData.Count > 0;
+        }
+
+        private void cmdNext_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            BitmapImage image = null;
+            PlayMedia(GetNextMediaFileName(true));
+            _isPaused = false;
+            try
+            {
+                image = new BitmapImage(_pauseUri);
+                imagePlayPause.Source = image;
+            }
+            catch { buttonPlayPause.Content = "Pause (CTRL+P)"; }
+            buttonPlayPause.ToolTip = "Pause (CTRL+P)";
         }
 
         private void cmdStop_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -336,8 +378,8 @@ namespace MirzaMediaPlayer
                 image = new BitmapImage(_playUri);
                 imagePlayPause.Source = image;
             }
-            catch { buttonPlayPause.Content = "Play"; }
-            buttonPlayPause.ToolTip = "Play";
+            catch { buttonPlayPause.Content = "Play (CTRL+P)"; }
+            buttonPlayPause.ToolTip = "Play (CTRL+P)";
             _isPaused = false;
         }
 

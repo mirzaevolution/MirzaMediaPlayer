@@ -45,6 +45,8 @@
     <Window.CommandBindings>
         <CommandBinding Command="{x:Static cmd:PlayerCoreCommands.LoadCommand}" x:Name="cmdLoad" CanExecute="cmdLoad_CanExecute" Executed="cmdLoad_Executed"/>
         <CommandBinding Command="{x:Static cmd:PlayerCoreCommands.PlayPauseCommand}" x:Name="cmdPlayPause" CanExecute="cmdPlayPause_CanExecute" Executed="cmdPlayPause_Executed"/>
+        <CommandBinding Command="{x:Static cmd:PlayerCoreCommands.PreviousCommand}" x:Name="cmdPrevious" CanExecute="cmdPrevious_CanExecute" Executed="cmdPrevious_Executed"/>
+        <CommandBinding Command="{x:Static cmd:PlayerCoreCommands.NextCommand}" x:Name="cmdNext" CanExecute="cmdNext_CanExecute" Executed="cmdNext_Executed"/>
         <CommandBinding Command="{x:Static cmd:PlayerCoreCommands.StopCommand}" x:Name="cmdStop" CanExecute="cmdStop_CanExecute" Executed="cmdStop_Executed"/>
         <CommandBinding Command="{x:Static cmd:PlayerCoreCommands.MuteCommand}" x:Name="cmdMute" CanExecute="cmdMute_CanExecute" Executed="cmdMute_Executed"/>
         <CommandBinding Command="{x:Static cmd:PlayerCoreCommands.RemoveItemsPlaylistCommand}" x:Name="cmdRemoveItems" CanExecute="cmdRemoveItems_CanExecute" Executed="cmdRemoveItems_Executed"/>
@@ -67,7 +69,7 @@
             <MediaElement Name="mediaElementMain" Margin="2" LoadedBehavior="Manual" MediaEnded="mediaElementMain_MediaEnded"/>
             <Image Name="imageAudio" Height="128" Width="128" Visibility="Hidden">
                 <Image.Source>
-                    <BitmapImage UriSource="Icons/playIcon.png" DecodePixelHeight="128" DecodePixelWidth="128"/>
+                    <BitmapImage UriSource="Icons/playIcon.png"/>
                 </Image.Source>
             </Image>
         </Grid>
@@ -123,8 +125,8 @@
                 </ListBox.ContextMenu>
             </ListBox>  
         </Border>
-        <StackPanel Grid.Column="3" Grid.Row="1" Grid.RowSpan="3">
-            <StackPanel DockPanel.Dock="Bottom">
+        <StackPanel Grid.Column="3" Grid.Row="1" Grid.RowSpan="3" Margin="0,0,0,3">
+            <StackPanel>
                 <TextBlock Margin="2,1,1,1">Volume</TextBlock>
                 <Slider Name="sliderVolume" Value=".75" Maximum="1" TickPlacement="TopLeft" ValueChanged="sliderVolume_ValueChanged"/>
                 <TextBlock Margin="2,1,1,1">Balance</TextBlock>
@@ -143,25 +145,34 @@
             <Slider Name="sliderDuration" LargeChange="10" IsEnabled="True" Minimum="0" Maximum="100" Grid.Column="1" Margin="3" ValueChanged="sliderDuration_ValueChanged"/>
             <TextBlock Name="textBlockDuration" Text="00:00:00" Foreground="RoyalBlue" VerticalAlignment="Center" Grid.Column="2" Margin="2"/>
         </Grid>
-        <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="3" ToolTip="Play">
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="3">
+            <Button Name="buttonLoad" 
+                     Grid.Column="2" Command="{x:Static cmd:PlayerCoreCommands.LoadCommand}"
+                    Style="{StaticResource styleButtonCommon}" ToolTip="Load Files (CTRL+O)">
+                <Image Source="Icons/Folder.png" Height="32" Width="32"/>
+            </Button>
             <Button Style="{StaticResource styleButtonCommon}" Name="buttonPlayPause" 
-                    Command="{x:Static cmd:PlayerCoreCommands.PlayPauseCommand}" ToolTip="Play">
+                    Command="{x:Static cmd:PlayerCoreCommands.PlayPauseCommand}" ToolTip="Play (CTRL+P)">
                 <Image x:Name="imagePlayPause" Source="Icons/play.png" Height="32" Width="32"/>
+            </Button>
+            <Button Style="{StaticResource styleButtonCommon}" Name="buttonPrevious"
+                    Command="{x:Static cmd:PlayerCoreCommands.PreviousCommand}" ToolTip="Play Previous Media (SHIFT+,)">
+                <Image Source="Icons/Previous.png" Height="32" Width="32"/>
+            </Button>
+            <Button Style="{StaticResource styleButtonCommon}" Name="buttonNext"
+                    Command="{x:Static cmd:PlayerCoreCommands.PreviousCommand}" ToolTip="Play Next Media (SHIFT+.)">
+                <Image Source="Icons/Next.png" Height="32" Width="32"/>
             </Button>
             <Button Style="{StaticResource styleButtonCommon}" 
                     Name="buttonStop" Command="{x:Static cmd:PlayerCoreCommands.StopCommand}"
-                    ToolTip="Stop">
+                    ToolTip="Stop (CTRL+S)">
                 <Image Source="Icons/stop.png" Height="32" Width="32"/>
             </Button>
             <ToggleButton Style="{StaticResource styleToggleButtonCommon}" Name="buttonMute" 
-                           ToolTip="Mute" Command="{x:Static cmd:PlayerCoreCommands.MuteCommand}">
+                           ToolTip="Mute (CTRL+M)" Command="{x:Static cmd:PlayerCoreCommands.MuteCommand}">
                 <Image Source="Icons/mute.png" Height="32" Width="32"/>
             </ToggleButton>
-            <Button Name="buttonLoad" 
-                     Grid.Column="2" Command="{x:Static cmd:PlayerCoreCommands.LoadCommand}"
-                    Style="{StaticResource styleButtonCommon}" ToolTip="Load Files">
-                <Image Source="Icons/Folder.png" Height="32" Width="32"/>
-            </Button>
+            
         </StackPanel>
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>

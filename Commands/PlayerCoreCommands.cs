@@ -25,6 +25,26 @@ namespace MirzaMediaPlayer.Commands
                     new KeyGesture(Key.P,ModifierKeys.Control)
                 });
         /// <summary>
+        /// Play Previous Media Command
+        /// </summary>
+        public static RoutedUICommand PreviousCommand { get; set; } =
+            new RoutedUICommand("Previous", "Previous",
+                typeof(PlayerCoreCommands),
+                new InputGestureCollection()
+                {
+                    new KeyGesture(Key.OemComma,ModifierKeys.Shift)
+                });
+        /// <summary>
+        /// Play Next Media Command
+        /// </summary>
+        public static RoutedUICommand NextCommand { get; set; } =
+            new RoutedUICommand("Next", "Next",
+                typeof(PlayerCoreCommands),
+                new InputGestureCollection()
+                {
+                    new KeyGesture(Key.OemPeriod,ModifierKeys.Shift)
+                });
+        /// <summary>
         /// Stop Command
         /// </summary>
         public static RoutedUICommand StopCommand { get; set; } =

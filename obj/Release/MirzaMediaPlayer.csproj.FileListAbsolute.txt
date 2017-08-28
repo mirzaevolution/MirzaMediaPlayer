@@ -1,0 +1,15 @@
+C:\Users\skyline\Documents\Visual Studio 2017\Projects\Windows Presentation Foundation\MirzaMediaPlayer\bin\Release\MirzaMediaPlayer.exe.config
+C:\Users\skyline\Documents\Visual Studio 2017\Projects\Windows Presentation Foundation\MirzaMediaPlayer\bin\Release\MirzaMediaPlayer.exe
+C:\Users\skyline\Documents\Visual Studio 2017\Projects\Windows Presentation Foundation\MirzaMediaPlayer\bin\Release\MirzaMediaPlayer.pdb
+C:\Users\skyline\Documents\Visual Studio 2017\Projects\Windows Presentation Foundation\MirzaMediaPlayer\obj\Release\MirzaMediaPlayer.csprojResolveAssemblyReference.cache
+C:\Users\skyline\Documents\Visual Studio 2017\Projects\Windows Presentation Foundation\MirzaMediaPlayer\obj\Release\MainWindow.g.cs
+C:\Users\skyline\Documents\Visual Studio 2017\Projects\Windows Presentation Foundation\MirzaMediaPlayer\obj\Release\App.g.cs
+C:\Users\skyline\Documents\Visual Studio 2017\Projects\Windows Presentation Foundation\MirzaMediaPlayer\obj\Release\GeneratedInternalTypeHelper.g.cs
+C:\Users\skyline\Documents\Visual Studio 2017\Projects\Windows Presentation Foundation\MirzaMediaPlayer\obj\Release\MirzaMediaPlayer_MarkupCompile.cache
+C:\Users\skyline\Documents\Visual Studio 2017\Projects\Windows Presentation Foundation\MirzaMediaPlayer\obj\Release\MirzaMediaPlayer_MarkupCompile.lref
+C:\Users\skyline\Documents\Visual Studio 2017\Projects\Windows Presentation Foundation\MirzaMediaPlayer\obj\Release\MainWindow.baml
+C:\Users\skyline\Documents\Visual Studio 2017\Projects\Windows Presentation Foundation\MirzaMediaPlayer\obj\Release\MirzaMediaPlayer.g.resources
+C:\Users\skyline\Documents\Visual Studio 2017\Projects\Windows Presentation Foundation\MirzaMediaPlayer\obj\Release\MirzaMediaPlayer.Properties.Resources.resources
+C:\Users\skyline\Documents\Visual Studio 2017\Projects\Windows Presentation Foundation\MirzaMediaPlayer\obj\Release\MirzaMediaPlayer.csproj.GenerateResource.Cache
+C:\Users\skyline\Documents\Visual Studio 2017\Projects\Windows Presentation Foundation\MirzaMediaPlayer\obj\Release\MirzaMediaPlayer.exe
+C:\Users\skyline\Documents\Visual Studio 2017\Projects\Windows Presentation Foundation\MirzaMediaPlayer\obj\Release\MirzaMediaPlayer.pdb

@@ -97,16 +97,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Audio_Cd.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="playIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Icons\Pause.png" />
     <Resource Include="Icons\Play.png" />
     <Resource Include="Icons\previous.png" />
-    <Resource Include="Icons\next.png" />
+    <Resource Include="Icons\Next.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\playIcon.png" />
@@ -130,6 +124,9 @@
   <ItemGroup>
     <Resource Include="Icons\Clear.png" />
     <Resource Include="Icons\Delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="README.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
