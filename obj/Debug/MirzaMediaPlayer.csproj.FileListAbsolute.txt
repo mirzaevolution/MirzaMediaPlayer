@@ -1,0 +1,15 @@
+C:\Users\skyline\Documents\Visual Studio 2017\Projects\Windows Presentation Foundation\MirzaMediaPlayer\bin\Debug\MirzaMediaPlayer.exe.config
+C:\Users\skyline\Documents\Visual Studio 2017\Projects\Windows Presentation Foundation\MirzaMediaPlayer\bin\Debug\MirzaMediaPlayer.exe
+C:\Users\skyline\Documents\Visual Studio 2017\Projects\Windows Presentation Foundation\MirzaMediaPlayer\bin\Debug\MirzaMediaPlayer.pdb
+C:\Users\skyline\Documents\Visual Studio 2017\Projects\Windows Presentation Foundation\MirzaMediaPlayer\obj\Debug\MirzaMediaPlayer.csprojResolveAssemblyReference.cache
+C:\Users\skyline\Documents\Visual Studio 2017\Projects\Windows Presentation Foundation\MirzaMediaPlayer\obj\Debug\MainWindow.g.cs
+C:\Users\skyline\Documents\Visual Studio 2017\Projects\Windows Presentation Foundation\MirzaMediaPlayer\obj\Debug\App.g.cs
+C:\Users\skyline\Documents\Visual Studio 2017\Projects\Windows Presentation Foundation\MirzaMediaPlayer\obj\Debug\MirzaMediaPlayer_MarkupCompile.cache
+C:\Users\skyline\Documents\Visual Studio 2017\Projects\Windows Presentation Foundation\MirzaMediaPlayer\obj\Debug\MirzaMediaPlayer_MarkupCompile.lref
+C:\Users\skyline\Documents\Visual Studio 2017\Projects\Windows Presentation Foundation\MirzaMediaPlayer\obj\Debug\MainWindow.baml
+C:\Users\skyline\Documents\Visual Studio 2017\Projects\Windows Presentation Foundation\MirzaMediaPlayer\obj\Debug\MirzaMediaPlayer.g.resources
+C:\Users\skyline\Documents\Visual Studio 2017\Projects\Windows Presentation Foundation\MirzaMediaPlayer\obj\Debug\MirzaMediaPlayer.Properties.Resources.resources
+C:\Users\skyline\Documents\Visual Studio 2017\Projects\Windows Presentation Foundation\MirzaMediaPlayer\obj\Debug\MirzaMediaPlayer.csproj.GenerateResource.Cache
+C:\Users\skyline\Documents\Visual Studio 2017\Projects\Windows Presentation Foundation\MirzaMediaPlayer\obj\Debug\MirzaMediaPlayer.exe
+C:\Users\skyline\Documents\Visual Studio 2017\Projects\Windows Presentation Foundation\MirzaMediaPlayer\obj\Debug\MirzaMediaPlayer.pdb
+C:\Users\skyline\Documents\Visual Studio 2017\Projects\Windows Presentation Foundation\MirzaMediaPlayer\obj\Debug\GeneratedInternalTypeHelper.g.cs
