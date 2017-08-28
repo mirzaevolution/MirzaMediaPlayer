@@ -12,11 +12,16 @@ using System.Windows.Input;
 
 namespace MirzaMediaPlayer
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+  
     public partial class MainWindow : Window
     {
+        public MainWindow()
+        {
+            InitializeComponent();
+
+            _playListContainer = TryFindResource("playListContainer") as PlayListContainer;
+        }
+
 
         #region private properties
         private TimeSpan _totalTimer, _progressTimer;
@@ -26,6 +31,7 @@ namespace MirzaMediaPlayer
         private Uri _pauseUri = new Uri(@"Icons\Pause.png", UriKind.Relative);
         private int _currentSelectedIndex=0;
         private bool _isPaused=false;
+        private string _currentlyPlayedFileName = "";
         #endregion
 
         #region private methods
@@ -57,10 +63,12 @@ namespace MirzaMediaPlayer
             {
                 if (!_isPaused && fileName != "")
                 {
+                    _currentlyPlayedFileName = fileName;
                     mediaElementMain.Source = new Uri(fileName, UriKind.Absolute);
                     sliderDuration.Value = 0;
                 }
-               
+                if(!sliderDuration.IsEnabled)
+                    sliderDuration.IsEnabled = true;
                 mediaElementMain.Play();
                 if (await DetectTimespan())
                 {
@@ -78,7 +86,7 @@ namespace MirzaMediaPlayer
                     }
                     textBlockDuration.Text = string.Format("{0:hh\\:mm\\:ss}",
                         mediaElementMain.NaturalDuration.TimeSpan);
-                    textBlockMediaStatus.Text = $"Playing {mediaElementMain.Source.OriginalString}";
+                    textBlockMediaStatus.Text = $"Playing {_currentlyPlayedFileName}";
                     ellipseStatus.Fill = Brushes.Lime;
                 }
             }
@@ -116,7 +124,7 @@ namespace MirzaMediaPlayer
             {
 
                 mediaElementMain.Stop();
-                
+                _currentlyPlayedFileName = "";
                 if (await DetectTimespan())
                 {
                     _timer.IsEnabled = false;
@@ -150,11 +158,7 @@ namespace MirzaMediaPlayer
         }
         #endregion
 
-        public MainWindow()
-        {
-            InitializeComponent();
-            
-        }
+       
         
         #region main events
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -166,114 +170,7 @@ namespace MirzaMediaPlayer
             };
 
             _timer.Tick += _timer_Tick;
-            _playListContainer = TryFindResource("playListContainer") as PlayListContainer;
         }
-        private void buttonLoad_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                OpenFileDialog fileDlg = new OpenFileDialog
-                {
-                    FileName = "",
-                    Filter = "Audio Files (*.mp3)|*.mp3|Video Files (*.mp4;*.3gp)|*.mp4;*.3gp",
-                    Title = "Choose Media",
-                    Multiselect = true,
-                    CheckFileExists = true,
-                    CheckPathExists = true,
-                    ReadOnlyChecked = true
-                };
-                if(fileDlg.ShowDialog().Value)
-                {
-                    foreach(string file in fileDlg.FileNames)
-                    {
-                        FileInfo fi = new FileInfo(file);
-                        PlayList newList = new PlayList
-                        {
-                            Name = fi.Name,
-                            FullName = fi.FullName
-                        };
-                        if (fi.Extension.ToLower().Contains("mp3"))
-                        {
-                            newList.Icon = @"Icons\Music.ico";
-                        }
-                        else if(fi.Extension.ToLower().Contains("mp4") || fi.Extension.ToLower().Contains("3gp"))
-                        {
-                            newList.Icon = @"Icons\Video.ico";
-                        }
-                        _playListContainer.PlayListData.Add(newList);
-
-                    }
-                }
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        private void buttonPlayPause_Click(object sender, RoutedEventArgs e)
-        {
-
-
-            if (_playListContainer.PlayListData.Count > 0)
-            {
-                BitmapImage image = null;
-                if (buttonPlayPause.ToolTip.ToString() == "Play")
-                {
-                    if (_isPaused)
-                        PlayMedia("");
-                    else
-                    {
-                        PlayMedia(GetNextMediaFileName());
-                    }
-                    _isPaused = false;
-                    try
-                    {
-                        image = new BitmapImage(_pauseUri);
-                        imagePlayPause.Source = image;
-                    }
-                    catch { buttonPlayPause.Content = "Pause"; }
-                    buttonPlayPause.ToolTip = "Pause";
-                }
-                else if (buttonPlayPause.ToolTip.ToString() == "Pause")
-                {
-                    _isPaused = true;
-                    PauseMedia();
-
-                    try
-                    {
-                        image = new BitmapImage(_playUri);
-                        imagePlayPause.Source = image;
-                    }
-                    catch { buttonPlayPause.Content = "Play"; }
-                    buttonPlayPause.ToolTip = "Play";
-                }
-
-            }
-         
-        }
-
-       
-
-        private void buttonStop_Click(object sender, RoutedEventArgs e)
-        {
-            StopMedia();
-            BitmapImage image = null;
-            try
-            {
-                image = new BitmapImage(_playUri);
-                imagePlayPause.Source = image;
-            }
-            catch { buttonPlayPause.Content = "Play"; }
-            buttonPlayPause.ToolTip = "Play";
-            _isPaused = false;
-        }
-
-        private void buttonMute_Click(object sender, RoutedEventArgs e)
-        {
-            mediaElementMain.IsMuted = !mediaElementMain.IsMuted;
-        }
-
         private void sliderVolume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             mediaElementMain.Volume = sliderVolume.Value;
@@ -300,8 +197,7 @@ namespace MirzaMediaPlayer
             else
                 StopMedia();
         }
-
-      
+              
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             int clickCount = e.ClickCount;
@@ -321,16 +217,6 @@ namespace MirzaMediaPlayer
             }
         }
 
-        private void menuRemoveSelectedItems_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void menuClearAll_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void sliderDuration_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (mediaElementMain.Source != null)
@@ -340,6 +226,178 @@ namespace MirzaMediaPlayer
                     _progressTimer = TimeSpan.FromSeconds(sliderDuration.Value);
                     mediaElementMain.Position = _progressTimer;
                 }
+            }
+        }
+        #endregion
+
+
+
+        #region Commands
+        private void cmdLoad_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+
+            e.CanExecute = true;
+        }
+
+        private void cmdLoad_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            try
+            {
+                OpenFileDialog fileDlg = new OpenFileDialog
+                {
+                    FileName = "",
+                    Filter = "Audio Files (*.mp3)|*.mp3|Video Files (*.mp4;*.3gp)|*.mp4;*.3gp",
+                    Title = "Choose Media",
+                    Multiselect = true,
+                    CheckFileExists = true,
+                    CheckPathExists = true,
+                    ReadOnlyChecked = true
+                };
+                if (fileDlg.ShowDialog().Value)
+                {
+                    foreach (string file in fileDlg.FileNames)
+                    {
+                        FileInfo fi = new FileInfo(file);
+                        PlayList newList = new PlayList
+                        {
+                            Name = fi.Name,
+                            FullName = fi.FullName
+                        };
+                        if (fi.Extension.ToLower().Contains("mp3"))
+                        {
+                            newList.Icon = @"Icons\Music.ico";
+                        }
+                        else if (fi.Extension.ToLower().Contains("mp4") || fi.Extension.ToLower().Contains("3gp"))
+                        {
+                            newList.Icon = @"Icons\Video.ico";
+                        }
+                        _playListContainer.PlayListData.Add(newList);
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void cmdPlayPause_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = _playListContainer == null ? false : _playListContainer.PlayListData.Count > 0;
+        }
+
+        private void cmdPlayPause_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+             BitmapImage image = null;
+            if (buttonPlayPause.ToolTip.ToString() == "Play")
+            {
+                if (_isPaused)
+                    PlayMedia("");
+                else
+                {
+                    PlayMedia(GetNextMediaFileName());
+                }
+                _isPaused = false;
+                try
+                {
+                    image = new BitmapImage(_pauseUri);
+                    imagePlayPause.Source = image;
+                }
+                catch { buttonPlayPause.Content = "Pause"; }
+                buttonPlayPause.ToolTip = "Pause";
+            }
+            else if (buttonPlayPause.ToolTip.ToString() == "Pause")
+            {
+                _isPaused = true;
+                PauseMedia();
+
+                try
+                {
+                    image = new BitmapImage(_playUri);
+                    imagePlayPause.Source = image;
+                }
+                catch { buttonPlayPause.Content = "Play"; }
+                buttonPlayPause.ToolTip = "Play";
+            }
+        }
+
+        private void cmdStop_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void cmdStop_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            StopMedia();
+            BitmapImage image = null;
+            try
+            {
+                image = new BitmapImage(_playUri);
+                imagePlayPause.Source = image;
+            }
+            catch { buttonPlayPause.Content = "Play"; }
+            buttonPlayPause.ToolTip = "Play";
+            _isPaused = false;
+        }
+
+        private void cmdMute_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void cmdMute_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            mediaElementMain.IsMuted = !mediaElementMain.IsMuted;
+        }
+
+        private void cmdRemoveItems_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = _playListContainer == null ? false : _playListContainer.PlayListData.Count > 0 && listBoxPlaylist.SelectedItems.Count>0;
+        }
+
+        private void cmdRemoveItems_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            for(int i=0;i< listBoxPlaylist.SelectedItems.Count; i++)
+            {
+                PlayList playlist = listBoxPlaylist.SelectedItems[i] as PlayList;
+                if(playlist!=null)
+                {
+                    try
+                    {
+                        if (_currentlyPlayedFileName == playlist.FullName)
+                        {
+                            StopMedia();
+                        }
+                        _playListContainer.PlayListData.Remove(playlist);
+                        i--;
+                    }
+                    catch(Exception ex)
+                    {
+                        MessageBox.Show("Error removing items", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        Console.WriteLine(ex);
+                    }
+                }
+            }
+        }
+
+        private void cmdClearAll_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = _playListContainer == null ? false : _playListContainer.PlayListData.Count > 0;
+        }
+
+        private void cmdClearAll_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            try
+            {
+                StopMedia();
+                _playListContainer.PlayListData.Clear();
+            }
+            catch(Exception ex)
+            {
+
+                MessageBox.Show("Error clearing items", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Console.WriteLine(ex);
             }
         }
         #endregion

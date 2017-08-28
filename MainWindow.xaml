@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MirzaMediaPlayer"
         xmlns:models="clr-namespace:MirzaMediaPlayer.Models"
+        xmlns:cmd="clr-namespace:MirzaMediaPlayer.Commands"
         mc:Ignorable="d" Icon="Icons/Audio_Cd.ico"
         Title="Mirza Media Player" 
         Background="#191919" Foreground="White"
@@ -41,6 +42,14 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static cmd:PlayerCoreCommands.LoadCommand}" x:Name="cmdLoad" CanExecute="cmdLoad_CanExecute" Executed="cmdLoad_Executed"/>
+        <CommandBinding Command="{x:Static cmd:PlayerCoreCommands.PlayPauseCommand}" x:Name="cmdPlayPause" CanExecute="cmdPlayPause_CanExecute" Executed="cmdPlayPause_Executed"/>
+        <CommandBinding Command="{x:Static cmd:PlayerCoreCommands.StopCommand}" x:Name="cmdStop" CanExecute="cmdStop_CanExecute" Executed="cmdStop_Executed"/>
+        <CommandBinding Command="{x:Static cmd:PlayerCoreCommands.MuteCommand}" x:Name="cmdMute" CanExecute="cmdMute_CanExecute" Executed="cmdMute_Executed"/>
+        <CommandBinding Command="{x:Static cmd:PlayerCoreCommands.RemoveItemsPlaylistCommand}" x:Name="cmdRemoveItems" CanExecute="cmdRemoveItems_CanExecute" Executed="cmdRemoveItems_Executed"/>
+        <CommandBinding Command="{x:Static cmd:PlayerCoreCommands.ClearAllCommand}" x:Name="cmdClearAll" CanExecute="cmdClearAll_CanExecute" Executed="cmdClearAll_Executed"/>
+    </Window.CommandBindings>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2.5*"/>
@@ -64,7 +73,9 @@
         </Grid>
         <GridSplitter Background="#303030" Grid.Column="1" Grid.RowSpan="4" Width="5" HorizontalAlignment="Stretch" ResizeBehavior="PreviousAndNext"/>
         <Border BorderBrush="RoyalBlue" BorderThickness="2" Grid.Column="2" Margin="5,0">
-            <ListBox Background="#191919"  Name="listBoxPlaylist" ItemsSource="{Binding Source={StaticResource playListContainer},Path=PlayListData,UpdateSourceTrigger=PropertyChanged}">
+            <ListBox Background="#191919"  Name="listBoxPlaylist" 
+                     ItemsSource="{Binding Source={StaticResource playListContainer},Path=PlayListData,UpdateSourceTrigger=PropertyChanged}"
+                     SelectionMode="Extended">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid Margin="3" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
@@ -84,8 +95,10 @@
                 </ListBox.ItemTemplate>
                 <ListBox.ContextMenu>
                     <ContextMenu Background="#191919">
-                        <MenuItem Foreground="White" Header="Remove Selected Item(s)" Name="menuRemoveSelectedItems" Click="menuRemoveSelectedItems_Click"/>
-                        <MenuItem Foreground="White" Header="Clear All" Name="menuClearAll" Click="menuClearAll_Click"/>
+                        <MenuItem Foreground="White" Header="Remove Selected Item(s)"
+                                  Command="{x:Static cmd:PlayerCoreCommands.RemoveItemsPlaylistCommand}"/>
+                        <MenuItem Foreground="White" Header="Clear All" Name="menuClearAll"
+                                  Command="{x:Static cmd:PlayerCoreCommands.ClearAllCommand}"/>
                     </ContextMenu>
                 </ListBox.ContextMenu>
             </ListBox>  
@@ -111,16 +124,22 @@
             <TextBlock Name="textBlockDuration" Text="00:00:00" Foreground="RoyalBlue" VerticalAlignment="Center" Grid.Column="2" Margin="2"/>
         </Grid>
         <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="3" ToolTip="Play">
-            <Button Style="{StaticResource styleButtonCommon}" Name="buttonPlayPause" Click="buttonPlayPause_Click" ToolTip="Play">
+            <Button Style="{StaticResource styleButtonCommon}" Name="buttonPlayPause" 
+                    Command="{x:Static cmd:PlayerCoreCommands.PlayPauseCommand}" ToolTip="Play">
                 <Image x:Name="imagePlayPause" Source="Icons/play.png" Height="32" Width="32"/>
             </Button>
-            <Button Style="{StaticResource styleButtonCommon}" Name="buttonStop" Click="buttonStop_Click" ToolTip="Stop">
+            <Button Style="{StaticResource styleButtonCommon}" 
+                    Name="buttonStop" Command="{x:Static cmd:PlayerCoreCommands.StopCommand}"
+                    ToolTip="Stop">
                 <Image Source="Icons/stop.png" Height="32" Width="32"/>
             </Button>
-            <ToggleButton Style="{StaticResource styleToggleButtonCommon}" Name="buttonMute" Click="buttonMute_Click" ToolTip="Mute">
+            <ToggleButton Style="{StaticResource styleToggleButtonCommon}" Name="buttonMute" 
+                           ToolTip="Mute" Command="{x:Static cmd:PlayerCoreCommands.MuteCommand}">
                 <Image Source="Icons/mute.png" Height="32" Width="32"/>
             </ToggleButton>
-            <Button Name="buttonLoad" Click="buttonLoad_Click" Grid.Column="2" Style="{StaticResource styleButtonCommon}" ToolTip="Load Files">
+            <Button Name="buttonLoad" 
+                     Grid.Column="2" Command="{x:Static cmd:PlayerCoreCommands.LoadCommand}"
+                    Style="{StaticResource styleButtonCommon}" ToolTip="Load Files">
                 <Image Source="Icons/Folder.png" Height="32" Width="32"/>
             </Button>
         </StackPanel>
@@ -130,7 +149,7 @@
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
             <TextBlock Name="textBlockMediaStatus" Grid.Row="1" Margin="3,2,2,2"
-                   Foreground="White" Text="No Media" VerticalAlignment="Center"/>
+                   Foreground="White" Text="No Media" VerticalAlignment="Center" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
             <Ellipse Name="ellipseStatus" Grid.Column="1" Fill="Gray" Width="20" Height="20" Margin="2,2,10,2"/>
         </Grid>
     </Grid>
