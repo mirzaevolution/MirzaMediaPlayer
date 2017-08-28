@@ -160,7 +160,7 @@
                 <Image Source="Icons/Previous.png" Height="32" Width="32"/>
             </Button>
             <Button Style="{StaticResource styleButtonCommon}" Name="buttonNext"
-                    Command="{x:Static cmd:PlayerCoreCommands.PreviousCommand}" ToolTip="Play Next Media (SHIFT+.)">
+                    Command="{x:Static cmd:PlayerCoreCommands.NextCommand}" ToolTip="Play Next Media (SHIFT+.)">
                 <Image Source="Icons/Next.png" Height="32" Width="32"/>
             </Button>
             <Button Style="{StaticResource styleButtonCommon}" 
