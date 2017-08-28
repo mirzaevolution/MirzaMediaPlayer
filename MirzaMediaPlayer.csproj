@@ -127,5 +127,9 @@
     <Resource Include="Icons\Music.ico" />
     <Resource Include="Icons\Video.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Clear.png" />
+    <Resource Include="Icons\Delete.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

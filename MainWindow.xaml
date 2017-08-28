@@ -95,10 +95,30 @@
                 </ListBox.ItemTemplate>
                 <ListBox.ContextMenu>
                     <ContextMenu Background="#191919">
-                        <MenuItem Foreground="White" Header="Remove Selected Item(s)"
-                                  Command="{x:Static cmd:PlayerCoreCommands.RemoveItemsPlaylistCommand}"/>
-                        <MenuItem Foreground="White" Header="Clear All" Name="menuClearAll"
-                                  Command="{x:Static cmd:PlayerCoreCommands.ClearAllCommand}"/>
+                        <MenuItem Foreground="White" Command="{x:Static cmd:PlayerCoreCommands.RemoveItemsPlaylistCommand}">
+                            <MenuItem.Header>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Source="Icons/Delete.png" Height="24" Width="24" Margin="1,1,2,1"/>
+                                    <TextBlock Text="Remove Selected Item(s)" Grid.Column="1" Margin="2,1,1,1" VerticalAlignment="Center"/>
+                                </Grid>
+                            </MenuItem.Header>
+                        </MenuItem>
+                        <MenuItem Foreground="White" Command="{x:Static cmd:PlayerCoreCommands.ClearAllCommand}">
+                            <MenuItem.Header>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Source="Icons/Clear.png" Height="24" Width="24" Margin="1,1,2,1"/>
+                                    <TextBlock Text="Clear All" Grid.Column="1" Margin="2,1,1,1" VerticalAlignment="Center"/>
+                                </Grid>
+                            </MenuItem.Header>
+                        </MenuItem>
                     </ContextMenu>
                 </ListBox.ContextMenu>
             </ListBox>  

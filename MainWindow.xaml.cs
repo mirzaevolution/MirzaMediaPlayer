@@ -358,24 +358,28 @@ namespace MirzaMediaPlayer
 
         private void cmdRemoveItems_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            for(int i=0;i< listBoxPlaylist.SelectedItems.Count; i++)
+           if(MessageBox.Show("Are you sure want to remove selected items?","Confirmation",MessageBoxButton.YesNo,MessageBoxImage.Question)
+                == MessageBoxResult.Yes)
             {
-                PlayList playlist = listBoxPlaylist.SelectedItems[i] as PlayList;
-                if(playlist!=null)
+                for (int i = 0; i < listBoxPlaylist.SelectedItems.Count; i++)
                 {
-                    try
+                    PlayList playlist = listBoxPlaylist.SelectedItems[i] as PlayList;
+                    if (playlist != null)
                     {
-                        if (_currentlyPlayedFileName == playlist.FullName)
+                        try
                         {
-                            StopMedia();
+                            if (_currentlyPlayedFileName == playlist.FullName)
+                            {
+                                StopMedia();
+                            }
+                            _playListContainer.PlayListData.Remove(playlist);
+                            i--;
                         }
-                        _playListContainer.PlayListData.Remove(playlist);
-                        i--;
-                    }
-                    catch(Exception ex)
-                    {
-                        MessageBox.Show("Error removing items", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        Console.WriteLine(ex);
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error removing items", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            Console.WriteLine(ex);
+                        }
                     }
                 }
             }
@@ -390,8 +394,13 @@ namespace MirzaMediaPlayer
         {
             try
             {
-                StopMedia();
-                _playListContainer.PlayListData.Clear();
+                if (MessageBox.Show("Are you sure want to clear all items?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question)
+                    == MessageBoxResult.Yes) {
+                    _playListContainer.PlayListData.Clear();
+                    if (textBlockMediaStatus.Text.StartsWith("Playing") ||
+                        textBlockMediaStatus.Text.StartsWith("Paused"))
+                    { StopMedia(); }
+                }
             }
             catch(Exception ex)
             {

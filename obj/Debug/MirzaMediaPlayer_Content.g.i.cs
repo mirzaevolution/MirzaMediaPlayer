@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("icons/music.ico")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("icons/video.ico")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("icons/bin_empty.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("icons/delete.png")]
 
 
