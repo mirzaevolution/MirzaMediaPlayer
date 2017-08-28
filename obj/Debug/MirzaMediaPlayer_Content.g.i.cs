@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("readme.txt")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("audio_cd.ico")]
 
 
